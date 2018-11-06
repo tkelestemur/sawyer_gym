@@ -1,28 +1,4 @@
 <mujoco model="sawyer">
-    <compiler angle="radian" meshdir="/home/tarik/sawyer_mujoco/meshes/" />
-    <size njmax="500" nconmax="100" />
-    <asset>
-        <mesh name="pedestal" file="pedestal.STL" />
-        <mesh name="base" file="base.STL" />
-        <mesh name="l0" file="l0.STL" />
-        <mesh name="head" file="head.STL" />
-        <mesh name="l1" file="l1.STL" />
-        <mesh name="l2" file="l2.STL" />
-        <mesh name="l3" file="l3.STL" />
-        <mesh name="l4" file="l4.STL" />
-        <mesh name="l5" file="l5.STL" />
-        <mesh name="l6" file="l6.STL" />
-        <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2" width="512" height="512"/>
-        <material name="MatPlane" reflectance="0.3" texture="texplane" texrepeat="1 1" texuniform="true"/>
-    </asset>
-    <worldbody>
-
-        <!-- Lights -->
-        <light name="light0" diffuse="1 1 1" pos="0 0 3" dir="0 0 -1" castshadow="false"/>
-        <light name="light1" diffuse="1 1 1" pos="1 -1 -.1" dir="-1 1 1" castshadow="false"/>
-        <light name="light2" diffuse="1 1 1" pos="1.5 0 3"  dir="0 0 -1" castshadow="false"/>
-
-        <geom name="floor" pos="0 0 -.913" size="5 5 .125" type="plane" material="MatPlane" condim="3"/>
 
         <geom size="0.11 0.2 0.265" pos="-0.325 0 -0.38" type="box" />
         <geom size="0.385 0.35 0.155" pos="-0.1225 0 -0.758" type="box" />
@@ -85,17 +61,5 @@
                 </body>
             </body>
         </body>
-    </worldbody>
-
-      <!-- Actuators -->
-  <actuator>
-    <motor name="right_j0" joint="right_j0" ctrllimited="true" ctrlrange="-80 80" />
-    <motor name="right_j1" joint="right_j1" ctrllimited="true" ctrlrange="-80 80" />
-    <motor name="right_j2" joint="right_j2" ctrllimited="true" ctrlrange="-40 40" />
-    <motor name="right_j3" joint="right_j3" ctrllimited="true" ctrlrange="-40 40" />
-    <motor name="right_j4" joint="right_j4" ctrllimited="true" ctrlrange="-9 9" />
-    <motor name="right_j5" joint="right_j5" ctrllimited="true" ctrlrange="-9 9" />
-    <motor name="right_j6" joint="right_j6" ctrllimited="true" ctrlrange="-9 9" />
-  </actuator>
 
 </mujoco>

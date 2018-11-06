@@ -7,6 +7,7 @@ from dm_control.rl import control
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 MODEL_PATH = PATH + '/model/sawyer_mujoco.mjb'
+MODEL_PATH_XML = PATH + '/model/sawyer_mujoco.xml'
 
 _CONTROL_TIMESTEP = .01  # (Seconds)
 _TIME_LIMIT = 10  # (Seconds)
@@ -16,11 +17,11 @@ JOINT_NAMES = ['right_j0', 'right_j1', 'right_j2', 'right_j3',
 LINK_NAMES = ['right_l0', 'right_l1', 'right_l2', 'right_l3',
                'right_l4', 'right_l5', 'right_l6']
 
-class Reach(base.Task):
+class SawyerReach(base.Task):
 
     def __init__(self, random=None):
 
-        super(Reach, self).__init__(random=random)
+        super(SawyerReach, self).__init__(random=random)
         self.target_pos = np.array([0.5, 0.2, 0.4])
 
     def initialize_episode(self, physics):
@@ -43,23 +44,22 @@ class Reach(base.Task):
             return 0.0
 
 
-
-
 if __name__ == '__main__':
 
     physics = mujoco.Physics.from_binary_path(MODEL_PATH)
-    task = Reach()
+    # physics = mujoco.Physics.from_xml_path(MODEL_PATH_XML)
+    task = SawyerReach()
     env = control.Environment(physics, task, time_limit=_TIME_LIMIT, control_timestep=_CONTROL_TIMESTEP)
 
     action_spec = env.action_spec()
     time_step = env.reset()
-
-    while not time_step.last():
-        action = np.random.uniform(action_spec.minimum - physics.data.qfrc_bias,
-                                   action_spec.maximum - physics.data.qfrc_bias,
-                                   size=action_spec.shape)
-        time_step = env.step(action)
-        print(time_step.reward)
+    #
+    # while not time_step.last():
+    #     action = np.random.uniform(action_spec.minimum - physics.data.qfrc_bias,
+    #                                action_spec.maximum - physics.data.qfrc_bias,
+    #                                size=action_spec.shape)
+    #     time_step = env.step(action)
+    #     print(time_step.reward)
 
     # def random_policy(time_step):
     #     del time_step  # Unused.
@@ -68,6 +68,6 @@ if __name__ == '__main__':
     #                              size=action_spec.shape)
     #     return rand_action + physics.data.qfrc_bias
     #
-    # viewer.launch(env, policy=random_policy)
+    viewer.launch(env)
 
 
