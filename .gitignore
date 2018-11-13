@@ -1,2 +1,3 @@
 .idea/
 MUJOCO_LOG.TXT
+__pycache__

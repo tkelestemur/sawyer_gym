@@ -62,13 +62,3 @@ class SawyerReachEnv(robot_env.RobotEnv):
     def _is_success(self, achieved_goal, desired_goal):
         d = goal_distance(achieved_goal, desired_goal)
         return (d < self.distance_threshold).astype(np.float32)
-
-
-    # def _env_setup(self, initial_qpos):
-    #     pass
-
-
-if __name__ == '__main__':
-    sawyer_reach = SawyerReachEnv()
-    # while True:
-    #     sawyer_reach.render()
