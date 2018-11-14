@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mujoco>
 
-    <compiler angle="radian" meshdir="/home/tarik/sawyer_mujoco/meshes/"/>
+    <compiler angle="radian" meshdir="meshes/"/>
     <size njmax="500" nconmax="100"/>
 
     <option gravity="0 0 0" integrator="RK4" />
