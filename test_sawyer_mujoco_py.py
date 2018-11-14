@@ -10,5 +10,6 @@ sim = mj.MjSim(model)
 viewer = mj.MjViewer(sim)
 
 while True:
+    sim.data.ctrl[0] = 0.01
     sim.step()
     viewer.render()
