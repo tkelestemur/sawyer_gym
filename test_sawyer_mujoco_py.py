@@ -9,8 +9,11 @@ MODEL_XML_PATH = PATH + '/model/sawyer_reach.xml'
 model = mj.load_model_from_path(MODEL_XML_PATH)
 sim = mj.MjSim(model)
 
-# viewer = mj.MjViewer(sim)
+viewer = mj.MjViewer(sim)
 sim.reset()
+
+sim.data.body_xpos[9] = np.array([1, 0, 1])
+sim.forward()
 # qpos = np.zeros(7)
 # qvel = np.zeros(7)
 # qpos[1] = 0.5
@@ -20,16 +23,8 @@ sim.reset()
 # sim.set_state(new_state)
 # sim.forward()
 #
-# sim.data.ctrl[:] = np.zeros(7)
-# sim.data.ctrl[1] = 0.1
-# i = 0
-# for i in range(20):
-#
-#     sim.step()
-#     i += 1
-#     viewer.render()
-#     print ("Joint 1 Vel: {}".format(sim.data.qvel[1]))
 
-# while True:
-#     sim.step()
-#     viewer.render()
+
+while True:
+    sim.step()
+    viewer.render()

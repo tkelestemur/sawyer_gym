@@ -1,64 +1,64 @@
 import os
 import numpy as np
-from gym.envs.robotics import rotations, robot_env
+from gym import utils
+from gym.envs.mujoco import mujoco_env
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 MODEL_XML_PATH = PATH + '/model/sawyer_reach.xml'
 
 
-def goal_distance(goal_a, goal_b):
-    assert goal_a.shape == goal_b.shape
-    return np.linalg.norm(goal_a - goal_b, axis=-1)
+class SawyerReachEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
-
-class SawyerReachEnv(robot_env.RobotEnv):
-
-    def __init__(self, reward_type='sparse', distance_threshold=0.05, n_substeps=1):
-
-        self.n_substeps = n_substeps
-        initial_qpos = {}
-        self.distance_threshold = distance_threshold
-        self.nu = 7
+    def __init__(self, reward_type='dense', distance_threshold=0.05, n_substeps=1):
         self.reward_type = reward_type
+        self.distance_threshold = distance_threshold
+        self.target_pos = np.zeros(3)
 
-        super(SawyerReachEnv, self).__init__(
-            model_path=MODEL_XML_PATH, n_substeps=self.n_substeps, n_actions=self.nu,
-            initial_qpos=initial_qpos)
+        utils.EzPickle.__init__(self)
+        mujoco_env.MujocoEnv.__init__(self, MODEL_XML_PATH, n_substeps)
 
-    def compute_reward(self, achieved_goal, goal, info):
-        # Compute distance between goal and the achieved goal.
-        d = goal_distance(achieved_goal, goal)
-        if self.reward_type == 'sparse':
-            return -(d > self.distance_threshold).astype(np.float32)
-        else:
-            return -d
+    def reset_model(self):
+        qpos_init = np.zeros(self.sim.model.nq)
+        qvel_init = np.zeros(self.sim.model.nq)
 
-    def _sample_goal(self):
-        return np.array([0.5, 0.2, 0.4])
+        # sample a uniform position goal
+        target_offset = np.array([0.6, 0.0, 0.3])
+        random_pos = np.random.uniform(low=[-0.3, -0.5, -0.4], high=[0.3, 0.5, 0.4], size=3)
+        self.target_pos = target_offset + random_pos
+
+        # initialize arm configuration and velocity
+        self.set_state(qpos_init, qvel_init)
+        return self._get_obs()
+
+    def step(self, action):
+        self.do_simulation(action, self.frame_skip)
+
+        # calculate reward
+        if self.reward_type == 'dense'
+            d = self.sim.data.get_body_xpos("right_l6") - self.target_pos
+            d = - np.linalg.norm(d)
+        elif self.reward_type == 'sparse':
+            d = self.sim.data.get_body_xpos("right_l6") - self.target_pos
+            d = np.linalg.norm(d)
+            if d < self.distance_threshold:
+                d = 1.0
+            
+
+        # r_t = - np.square(action).sum()
+
+        reward = d
+        done = bool(np.abs(r_d) < self.distance_threshold)
+
+        obs = self._get_obs()
+
+        return obs, reward, done, {}
 
     def _get_obs(self):
-
-        right_l6_id = self.sim.model.body_name2id('right_l6')
-        right_l6_pos = self.sim.data.body_xpos[right_l6_id]
-        right_l6_vel = self.sim.data.body_xvelp[right_l6_id]
-
+        eef_pos = self.sim.data.get_body_xpos('right_l6')
+        eef_vel = self.sim.data.get_body_xvelp('right_l6')
+        target_pos = self.target_pos
         arm_qpos = self.sim.data.qpos
         arm_qvel = self.sim.data.qvel
 
-        obs = np.concatenate([right_l6_pos, right_l6_vel, arm_qpos, arm_qvel])
-        return {
-            'observation': obs.copy(),
-            'achieved_goal': right_l6_pos.copy(),
-            'desired_goal': self.goal.copy(),
-        }
-
-    def _set_action(self, action):
-        assert action.shape == (self.nu, )
-        action = action.copy()
-
-        for i in range(self.nu):
-            self.sim.data.ctrl[i] = action[i]
-
-    def _is_success(self, achieved_goal, desired_goal):
-        d = goal_distance(achieved_goal, desired_goal)
-        return (d < self.distance_threshold).astype(np.float32)
+        obs = np.concatenate([arm_qpos, arm_qvel, eef_pos, eef_vel, target_pos])
+        return obs
