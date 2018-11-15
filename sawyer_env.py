@@ -11,8 +11,8 @@ class SawyerEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
     def __init__(self, reward_type='dense', distance_threshold=0.05, n_substeps=2):
 
-        # self.reward_type = reward_type
-        # self.distance_threshold = distance_threshold
+        self.reward_type = reward_type
+        self.distance_threshold = distance_threshold
 
         utils.EzPickle.__init__(self)
         mujoco_env.MujocoEnv.__init__(self, MODEL_XML_PATH, n_substeps)
@@ -26,17 +26,15 @@ class SawyerEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
     def step(self, action):
 
-
         self.do_simulation(action, self.frame_skip)
 
         # calculate reward
         d = self.sim.data.get_body_xpos("right_l6") - self.sim.data.get_body_xpos("target")
         r_d = - np.linalg.norm(d)
-        r_t = - np.square(action).sum()
+        # r_t = - np.square(action).sum()
 
-        reward = r_d + r_t
-
-        done = bool(np.abs(r_d) < 0.05)
+        reward = r_d
+        done = bool(np.abs(r_d) < self.distance_threshold)
 
         obs = self._get_obs()
 

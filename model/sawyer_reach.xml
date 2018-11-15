@@ -4,7 +4,7 @@
     <compiler angle="radian" meshdir="meshes/"/>
     <size njmax="500" nconmax="100"/>
 
-    <option gravity="0 0 0" integrator="RK4" timestep="0.05"/>
+    <option gravity="0 0 0" timestep="0.005"/>
 
     <asset>
         <mesh name="pedestal" file="pedestal.STL"/>
@@ -40,36 +40,47 @@
 
     </worldbody>
 
-  <!-- Torque Control -->
-  <!--<actuator>-->
-    <!--<motor name="right_j0" joint="right_j0" ctrllimited="true" ctrlrange="-1.0 1.0" gear="80.0"/>-->
-    <!--<motor name="right_j1" joint="right_j1" ctrllimited="true" ctrlrange="-1.0 1.0" gear="80.0"/>-->
-    <!--<motor name="right_j2" joint="right_j2" ctrllimited="true" ctrlrange="-1.0 1.0" gear="40.0"/>-->
-    <!--<motor name="right_j3" joint="right_j3" ctrllimited="true" ctrlrange="-1.0 1.0" gear="40.0"/>-->
-    <!--<motor name="right_j4" joint="right_j4" ctrllimited="true" ctrlrange="-1.0 1.0" gear="9"/>-->
-    <!--<motor name="right_j5" joint="right_j5" ctrllimited="true" ctrlrange="-1.0 1.0" gear="9"/>-->
-    <!--<motor name="right_j6" joint="right_j6" ctrllimited="true" ctrlrange="-1.0 1.0" gear="9"/>-->
-  <!--</actuator>-->
+    <!-- Torque Control -->
+    <!--<actuator>-->
+        <!--<motor name="right_j0" joint="right_j0" ctrllimited="true" ctrlrange="-1.0 1.0" gear="80.0"/>-->
+        <!--<motor name="right_j1" joint="right_j1" ctrllimited="true" ctrlrange="-1.0 1.0" gear="80.0"/>-->
+        <!--<motor name="right_j2" joint="right_j2" ctrllimited="true" ctrlrange="-1.0 1.0" gear="40.0"/>-->
+        <!--<motor name="right_j3" joint="right_j3" ctrllimited="true" ctrlrange="-1.0 1.0" gear="40.0"/>-->
+        <!--<motor name="right_j4" joint="right_j4" ctrllimited="true" ctrlrange="-1.0 1.0" gear="9"/>-->
+        <!--<motor name="right_j5" joint="right_j5" ctrllimited="true" ctrlrange="-1.0 1.0" gear="9"/>-->
+        <!--<motor name="right_j6" joint="right_j6" ctrllimited="true" ctrlrange="-1.0 1.0" gear="9"/>-->
+    <!--</actuator>-->
 
-  <!--<actuator>-->
-    <!--<position name="right_j0" joint="right_j0" ctrllimited="true" ctrlrange="-80 80" />-->
-    <!--<position name="right_j1" joint="right_j1" ctrllimited="true" ctrlrange="-80 80" />-->
-    <!--<position name="right_j2" joint="right_j2" ctrllimited="true" ctrlrange="-40 40" />-->
-    <!--<position name="right_j3" joint="right_j3" ctrllimited="true" ctrlrange="-40 40" />-->
-    <!--<position name="right_j4" joint="right_j4" ctrllimited="true" ctrlrange="-9 9" />-->
-    <!--<position name="right_j5" joint="right_j5" ctrllimited="true" ctrlrange="-9 9" />-->
-    <!--<position name="right_j6" joint="right_j6" ctrllimited="true" ctrlrange="-9 9" />-->
-  <!--</actuator>-->
 
-  <!-- Velocity Control -->
-  <actuator>
-    <velocity name="right_j0" joint="right_j0" ctrllimited="true" ctrlrange="-1.0 1.0" />
-    <velocity name="right_j1" joint="right_j1" ctrllimited="true" ctrlrange="-1.0 1.0" />
-    <velocity name="right_j2" joint="right_j2" ctrllimited="true" ctrlrange="-1.0 1.0" />
-    <velocity name="right_j3" joint="right_j3" ctrllimited="true" ctrlrange="-1.0 1.0" />
-    <velocity name="right_j4" joint="right_j4" ctrllimited="true" ctrlrange="-1.0 1.0" />
-    <velocity name="right_j5" joint="right_j5" ctrllimited="true" ctrlrange="-1.0 1.0" />
-    <velocity name="right_j6" joint="right_j6" ctrllimited="true" ctrlrange="-1.0 1.0" />
-  </actuator>
+    <!-- Position Control -->
+    <!--<actuator>-->
+        <!--<position name="right_j0" joint="right_j0" kp="2" forcelimited="false" forcerange="-100 100" ctrllimited="true" ctrlrange="-3.0503 3.0503" />-->
+        <!--<position name="right_j1" joint="right_j1" kp="5" forcelimited="false" forcerange="-100 100" ctrllimited="true" ctrlrange="-3.8095 2.2736" />-->
+        <!--<position name="right_j2" joint="right_j2" kp="5" forcelimited="false" forcerange="-100 100" ctrllimited="true" ctrlrange="-3.0426 3.0426" />-->
+        <!--<position name="right_j3" joint="right_j3" kp="5" forcelimited="false" forcerange="-100 100" ctrllimited="true" ctrlrange="-3.0439 3.0439" />-->
+        <!--<position name="right_j4" joint="right_j4" kp="5" forcelimited="false" forcerange="-100 100" ctrllimited="true" ctrlrange="-2.9761 2.9761" />-->
+        <!--<position name="right_j5" joint="right_j5" kp="5" forcelimited="false" forcerange="-100 100" ctrllimited="true" ctrlrange="-2.9761 2.9761" />-->
+        <!--<position name="right_j6" joint="right_j6" kp="5" forcelimited="false" forcerange="-100 100" ctrllimited="true" ctrlrange="-4.7124 4.7124" />-->
+    <!--</actuator>-->
 
+
+    <actuator>
+        <velocity ctrllimited="true" ctrlrange="-1.74 1.74"   joint="right_j0" kv="8.0" name="vel_right_j0"/>
+        <velocity ctrllimited="true" ctrlrange="-1.328 1.328" joint="right_j1" kv="7.0" name="vel_right_j1"/>
+        <velocity ctrllimited="true" ctrlrange="-1.957 1.957" joint="right_j2" kv="6.0" name="vel_right_j2"/>
+        <velocity ctrllimited="true" ctrlrange="-1.957 1.957" joint="right_j3" kv="4.0" name="vel_right_j3"/>
+        <velocity ctrllimited="true" ctrlrange="-3.485 3.485" joint="right_j4" kv="2.0" name="vel_right_j4"/>
+        <velocity ctrllimited="true" ctrlrange="-3.485 3.485" joint="right_j5" kv="0.5" name="vel_right_j5"/>
+        <velocity ctrllimited="true" ctrlrange="-4.545 4.545" joint="right_j6" kv="0.1" name="vel_right_j6"/>
+    </actuator>
+
+    <!--<sensor>-->
+        <!--<jointpos joint='right_j0'/>-->
+        <!--<jointpos joint='right_j1'/>-->
+        <!--<jointpos joint='right_j2'/>-->
+        <!--<jointpos joint='right_j3'/>-->
+        <!--<jointpos joint='right_j4'/>-->
+        <!--<jointpos joint='right_j5'/>-->
+        <!--<jointpos joint='right_j6'/>-->
+    <!--</sensor>-->
 </mujoco>
