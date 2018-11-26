@@ -1,0 +1,35 @@
+<mujoco>
+
+    <compiler angle="radian" meshdir="meshes/"/>
+    <size njmax="500" nconmax="100"/>
+
+    <option gravity="0 0 -9.81" timestep="0.002" cone="elliptic" impratio="20"/>
+
+    <asset>
+        <mesh name="pedestal" file="pedestal.STL" />
+        <mesh name="base" file="base.STL" />
+        <mesh name="l0" file="l0.STL" />
+        <mesh name="head" file="head.STL" />
+        <mesh name="l1" file="l1.STL" />
+        <mesh name="l2" file="l2.STL" />
+        <mesh name="l3" file="l3.STL" />
+        <mesh name="l4" file="l4.STL" />
+        <mesh name="l5" file="l5.STL" />
+        <mesh name="l6" file="l6.STL" />
+        <mesh name="connector_plate" file="connector_plate.STL" />
+        <mesh name="electric_gripper_base" file="electric_gripper_base.STL" />
+        <mesh name="standard_narrow" file="standard_narrow.STL" />
+        <mesh name="basic_soft_tip" file="basic_soft_tip.STL" />
+
+        <texture name="tex_plane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2" width="512" height="512"/>
+        <material name="mat_plane" reflectance="0.3" texture="tex_plane" texrepeat="1 1" texuniform="true"/>
+        <material name="table_mat" specular="0" shininess="0.5" reflectance="0" rgba="0.93 0.93 0.93 1"/>
+        <material name="block_mat" specular="0" shininess="0.5" reflectance="0" rgba="0.2 0.2 0.2 1"/>
+
+    </asset>
+
+    <contact>
+        <exclude body1="right_gripper_l_finger" body2="right_gripper_r_finger"/>
+    </contact>
+
+</mujoco>

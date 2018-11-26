@@ -1,28 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <mujoco>
 
-    <compiler angle="radian" meshdir="meshes/"/>
-    <size njmax="500" nconmax="100"/>
-
-    <option gravity="0 0 0" timestep="0.005"/>
-
-    <asset>
-        <mesh name="pedestal" file="pedestal.STL"/>
-        <mesh name="base" file="base.STL"/>
-        <mesh name="l0" file="l0.STL"/>
-        <mesh name="head" file="head.STL"/>
-        <mesh name="l1" file="l1.STL"/>
-        <mesh name="l2" file="l2.STL"/>
-        <mesh name="l3" file="l3.STL"/>
-        <mesh name="l4" file="l4.STL"/>
-        <mesh name="l5" file="l5.STL"/>
-        <mesh name="l6" file="l6.STL"/>
-
-        <texture name="tex_plane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2" width="512" height="512"/>
-        <material name="mat_plane" reflectance="0.3" texture="tex_plane" texrepeat="1 1" texuniform="true"/>
-1
-    </asset>
-
+    <include file="shared.xml"/>
 
     <worldbody>
         <!-- Lights -->
@@ -32,11 +10,11 @@
         <geom name="floor" pos="0 0 -.913" size="20 20 .125" type="plane" material="mat_plane" condim="3"/>
 
         <!-- Robot -->
-        <include file="sawyer_mujoco.xml"/>
+        <include file="sawyer_gripper_mujoco.xml"/>
 
         <!-- Target -->
-        <body name="target" pos="0 0 0">
-			<geom group="1" conaffinity="0" contype="0" pos="0 0 0" rgba="0.9 0.2 0.2 1" size="0.2" type="sphere"/>
+        <body mocap="true" name="target" pos="1 0 1">
+            <geom name="target" group="1" conaffinity="0" contype="0" pos="0 0 0" rgba="0 0.9 0 1" size="0.03" type="sphere"/>
 		</body>
 
         <!-- Target Sampling Space -->
@@ -80,6 +58,9 @@
         <velocity ctrllimited="true" ctrlrange="-3.485 3.485" joint="right_j4" kv="2.0" name="right_j4_vel"/>
         <velocity ctrllimited="true" ctrlrange="-3.485 3.485" joint="right_j5" kv="0.5" name="right_j5_vel"/>
         <velocity ctrllimited="true" ctrlrange="-4.545 4.545" joint="right_j6" kv="0.1" name="right_j6_vel"/>
+
+        <!--<position ctrllimited="true" ctrlrange="0 0.020833"  joint="right_gripper_r_finger_joint" kp="10000" name="right_gripper_r_finger_joint" forcelimited="true" forcerange="-20 20"/>-->
+        <!--<position ctrllimited="true" ctrlrange="-0.020833 0" joint="right_gripper_l_finger_joint" kp="10000" name="right_gripper_l_finger_joint" forcelimited="true" forcerange="-20 20"/>-->
     </actuator>
 
     <!--<sensor>-->

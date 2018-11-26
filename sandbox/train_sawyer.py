@@ -1,9 +1,6 @@
 import os
 import gym
-import time
-import numpy as np
 import tensorflow as tf
-from sawyer_env import SawyerEnv
 from baselines import logger
 from baselines.bench import Monitor
 from baselines.common.vec_env.dummy_vec_env import DummyVecEnv

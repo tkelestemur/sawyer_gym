@@ -1,5 +1,10 @@
 <?xml version="1.0" ?>
 <robot name="sawyer" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <mujoco>
+     <compiler meshdir="/home/tarik/sawyer_mujoco/meshes/" balanceinertia="true" discardvisual="false"/>
+  </mujoco>
+
   <xacro:arg name="gazebo" default="false"/>
   <xacro:arg name="pedestal" default="true"/>
   <material name="black">
