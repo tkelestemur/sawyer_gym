@@ -68,9 +68,14 @@ class SawyerReachEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         if self.reward_type == 'dense':
             d = self.sim.data.get_body_xpos(GRIPPER_LINK) - self.target_pos
             euc_d = np.linalg.norm(d)
-            reward = np.exp(-0.25 * euc_d)
+
+            if bool(np.abs(euc_d) < self.distance_threshold):
+                reward, done = 10, True
+            else:
+                reward = np.exp(-0.2 * euc_d)
+                done = False
             # reward = - euc_d
-            done = bool(np.abs(euc_d) < self.distance_threshold)
+            # done = bool(np.abs(euc_d) < self.distance_threshold)
         elif self.reward_type == 'sparse':
             d = self.sim.data.get_body_xpos(GRIPPER_LINK) - self.target_pos
             d = np.linalg.norm(d)
@@ -99,9 +104,7 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         self.object_init_pos = self.sim.data.get_body_xpos(OBJECT)
 
     def reset_model(self):
-        qpos_init = np.zeros(self.sim.model.nq)
-        qpos_init[:7] = np.array([-0.58940138, -1.1788925, 0.61659816, 1.62266692,
-                                  -0.22474244, 1.2130372, -1.32163291])
+        qpos_init = np.array([-0.58940138, -1.1788925, 0.61659816, 1.62266692, -0.22474244, 1.2130372, -1.32163291, -0.020833, 0.020833, 0.7, 0, -0.095, 1, 0, 0, 0])
         qvel_init = np.zeros(self.sim.model.nv)
 
         # initialize arm configuration and velocity
@@ -133,7 +136,7 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     def _calculate_grasp_reward(self):
 
         # calculate distance reward
-        d = self.sim.data.get_body_xpos(GRIPPER_LINK) - self.target_pos
+        d = self.sim.data.get_body_xpos(GRIPPER_LINK)
         euc_d = np.linalg.norm(d)
         dist_reward = np.exp(-0.25 * euc_d)
 
@@ -155,7 +158,7 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
             if left_finger_contact and right_finger_contact:
                 grasp_reward = 1
 
-            print(self.object_init_pos)
+            # print(self.object_init_pos)
 
         reward = grasp_reward + dist_reward
 
