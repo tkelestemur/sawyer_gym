@@ -97,14 +97,18 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
         self.reward_type = reward_type
         xml_path = MODEL_PATH + 'sawyer_grasp.xml'
-
+        self.object_init_pos = np.array([0.7, 0, -0.095])
         utils.EzPickle.__init__(self)
         mujoco_env.MujocoEnv.__init__(self, xml_path, n_substeps)
 
-        self.object_init_pos = self.sim.data.get_body_xpos(OBJECT)
+
 
     def reset_model(self):
-        qpos_init = np.array([-0.58940138, -1.1788925, 0.61659816, 1.62266692, -0.22474244, 1.2130372, -1.32163291, -0.020833, 0.020833, 0.7, 0, -0.095, 1, 0, 0, 0])
+        qpos_arm = np.array([-0.58940138, -1.1788925, 0.61659816, 1.62266692,
+                             -0.22474244, 1.2130372, -1.32163291])
+        qpos_fingers = np.array([-0.020833, 0.020833])
+        qpos_object = np.array([0.7, 0, -0.095, 1, 0, 0, 0])
+        qpos_init = np.concatenate((qpos_arm, qpos_fingers, qpos_object))
         qvel_init = np.zeros(self.sim.model.nv)
 
         # initialize arm configuration and velocity
@@ -135,31 +139,42 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
     def _calculate_grasp_reward(self):
 
+        dist_reward, grasp_reward, terminal_reward = 0, 0, 0
+
         # calculate distance reward
-        d = self.sim.data.get_body_xpos(GRIPPER_LINK)
+        d = self.sim.data.get_body_xpos(GRIPPER_LINK) - self.sim.data.get_body_xpos(OBJECT)
         euc_d = np.linalg.norm(d)
-        dist_reward = np.exp(-0.25 * euc_d)
+        # dist_reward = np.exp(-0.25 * euc_d)
+        dist_reward = - euc_d
 
-        # calculate contact reward
-        grasp_reward = 0
+        # calculate grasp reward
+        self.object_id = self.sim.model.geom_name2id('object')
+        self.right_finger_id = self.sim.model.geom_name2id('r_finger_tip')
+        self.left_finger_id = self.sim.model.geom_name2id('l_finger_tip')
+
+        right_finger_contact, left_finger_contact = False, False
+
         for i in range(self.sim.data.ncon):
+
             c = self.sim.data.contact[i]
-            right_finger_contact, left_finger_contact = False, False
 
-            if c.geom1 == self.sim.model.geom_name2id(OBJECT) and c.geom2 == self.sim.model.geom_name2id('l_finger_tip'):
+            if c.geom1 == self.object_id and c.geom2 == self.left_finger_id:
                 left_finger_contact = True
-            if c.geom1 == self.sim.model.geom_name2id('l_finger_tip') and c.geom2 == self.sim.model.geom_name2id(OBJECT):
+            if c.geom1 == self.left_finger_id and c.geom2 == self.object_id:
                 left_finger_contact = True
-            if c.geom1 == self.sim.model.geom_name2id(OBJECT) and c.geom2 == self.sim.model.geom_name2id('r_finger_tip'):
-                left_finger_contact = True
-            if c.geom1 == self.sim.model.geom_name2id('r_finger_tip') and c.geom2 == self.sim.model.geom_name2id(OBJECT):
-                left_finger_contact = True
+            if c.geom1 == self.object_id and c.geom2 == self.right_finger_id:
+                right_finger_contact = True
+            if c.geom1 == self.right_finger_id and c.geom2 == self.object_id:
+                right_finger_contact = True
 
-            if left_finger_contact and right_finger_contact:
-                grasp_reward = 1
+        if left_finger_contact and right_finger_contact:
+            grasp_reward = 1 + self.sim.data.get_body_xpos(OBJECT)[2] - self.object_init_pos[2]
 
-            # print(self.object_init_pos)
-
-        reward = grasp_reward + dist_reward
+        # calculate terminal reward
+        if self.sim.data.get_body_xpos(OBJECT)[2] - self.object_init_pos[2] > 0.1:
+            terminal_reward = 10
+            done = True
+            print('dist_reward: ({}) grasp_reward: ({})'.format(dist_reward, grasp_reward))
+        reward = grasp_reward + dist_reward +terminal_reward
 
         return reward, False

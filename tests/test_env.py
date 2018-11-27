@@ -22,6 +22,6 @@ if __name__ == '__main__':
         a[7:9] = gripper_q
 
         env.step(a)
-        print('q_dot: {}'.format(q_dot))
+        # print('q_dot: {}'.format(q_dot))
         # print('q_vel: {}'.format(env.sim.data.qvel))
         env.render()
