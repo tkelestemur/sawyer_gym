@@ -7,8 +7,8 @@ PATH = os.path.dirname(os.path.realpath(__file__))
 MODEL_PATH = PATH + '/../model/'
 GRIPPER_LINK = 'right_gripper_tip'
 OBJECT = 'object'
-RIGHT_GRIPPER_TIP = ''
-LEFT_GRIPPER_TIP = ''
+RIGHT_GRIPPER_TIP = 'r_finger_tip'
+LEFT_GRIPPER_TIP = 'l_finger_tip'
 
 
 class SawyerReachEnv(mujoco_env.MujocoEnv, utils.EzPickle):
@@ -101,8 +101,6 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         utils.EzPickle.__init__(self)
         mujoco_env.MujocoEnv.__init__(self, xml_path, n_substeps)
 
-
-
     def reset_model(self):
         qpos_arm = np.array([-0.58940138, -1.1788925, 0.61659816, 1.62266692,
                              -0.22474244, 1.2130372, -1.32163291])
@@ -129,28 +127,34 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         return obs, reward, done, {}
 
     def _get_obs(self):
-        eef_pos = self.sim.data.get_body_xpos(GRIPPER_LINK)
-        eef_vel = self.sim.data.get_body_xvelp(GRIPPER_LINK)
+        eef_pos = self.sim.data.get_site_xpos(GRIPPER_LINK)
+        eef_vel = self.sim.data.get_site_xvelp(GRIPPER_LINK)
         arm_qpos = self.sim.data.qpos[:7]
         arm_qvel = self.sim.data.qvel[:7]
+        finger_qpos = self.sim.data.qpos[7:9]
+        finger_qvel = self.sim.data.qvel[7:9]
+        object_pos = self.sim.data.get_site_xpos(OBJECT)
+        object_vel = self.sim.data.get_site_xvelp(OBJECT)
 
-        obs = np.concatenate([arm_qpos, arm_qvel, eef_pos, eef_vel])
+        obs = np.concatenate([arm_qpos, arm_qvel, eef_pos, eef_vel, finger_qpos,
+                              finger_qvel, object_pos, object_vel])
         return obs
 
     def _calculate_grasp_reward(self):
 
         dist_reward, grasp_reward, terminal_reward = 0, 0, 0
+        grasped = False
 
         # calculate distance reward
-        d = self.sim.data.get_body_xpos(GRIPPER_LINK) - self.sim.data.get_body_xpos(OBJECT)
+        d = self.sim.data.get_site_xpos(GRIPPER_LINK) - self.sim.data.get_site_xpos(OBJECT)
         euc_d = np.linalg.norm(d)
         # dist_reward = np.exp(-0.25 * euc_d)
         dist_reward = - euc_d
 
         # calculate grasp reward
-        self.object_id = self.sim.model.geom_name2id('object')
-        self.right_finger_id = self.sim.model.geom_name2id('r_finger_tip')
-        self.left_finger_id = self.sim.model.geom_name2id('l_finger_tip')
+        self.object_id = self.sim.model.geom_name2id(OBJECT)
+        self.right_finger_id = self.sim.model.geom_name2id(RIGHT_GRIPPER_TIP)
+        self.left_finger_id = self.sim.model.geom_name2id(LEFT_GRIPPER_TIP)
 
         right_finger_contact, left_finger_contact = False, False
 
@@ -168,13 +172,20 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
                 right_finger_contact = True
 
         if left_finger_contact and right_finger_contact:
-            grasp_reward = 1 + self.sim.data.get_body_xpos(OBJECT)[2] - self.object_init_pos[2]
+            grasp_reward = 1 + self.sim.data.get_site_xpos(OBJECT)[2] - self.object_init_pos[2]
+            grasped = True
+
+        # print('dist_reward: ({}) grasp_reward: ({})'.format(dist_reward, grasp_reward))
 
         # calculate terminal reward
-        if self.sim.data.get_body_xpos(OBJECT)[2] - self.object_init_pos[2] > 0.1:
+        if grasped and (self.sim.data.get_site_xpos(OBJECT)[2] - self.object_init_pos[2]) > 0.1:
             terminal_reward = 10
             done = True
-            print('dist_reward: ({}) grasp_reward: ({})'.format(dist_reward, grasp_reward))
-        reward = grasp_reward + dist_reward +terminal_reward
 
-        return reward, False
+        else:
+            terminal_reward = 0
+            done = False
+
+        reward = grasp_reward + dist_reward + terminal_reward
+
+        return reward, done

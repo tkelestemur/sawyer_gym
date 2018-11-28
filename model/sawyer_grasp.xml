@@ -22,13 +22,13 @@
         <body name="object">
             <joint name="object_j" type="free" damping="0.01"/>
 			<geom group="1" size="0.02 0.02 0.02" type="box" name="object" material="block_mat" mass="0.02" solimp="0.998 0.998 0.001" solref="0.01 1"/>
-			<!--<site name="object_site" pos="0 0 0" size="0.02 0.02 0.02" rgba="1 0 0 1" type="sphere"/>-->
+			<site name="object" pos="0 0 0" size="0.01" rgba=".1 .9 0 1" type="sphere"/>
 		</body>
 
 
-        <camera name="camera_topdown" mode="fixed" zaxis="0 0 1" pos="0 0 3" />
-        <camera name="camera_side" mode="fixed" zaxis="0 -1 0" pos="0.4 -2 0.5" />
-        <camera name="camera_front" mode="fixed" xyaxes="0 1 0 0 0 1" pos="2.4 0 0.5" />
+        <!--<camera name="camera_topdown" mode="fixed" zaxis="0 0 1" pos="0 0 3" />-->
+        <!--<camera name="camera_side" mode="fixed" zaxis="0 -1 0" pos="0.4 -2 0.5" />-->
+        <!--<camera name="camera_front" mode="fixed" xyaxes="0 1 0 0 0 1" pos="2.4 0 0.5" />-->
 
 
     </worldbody>

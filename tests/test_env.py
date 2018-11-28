@@ -10,7 +10,8 @@ env = SawyerGraspEnv(n_substeps=1)
 env.reset()
 print('# Generalized Coordinate : {} # DoF {} # Actuators {}'.format(env.sim.model.nq, env.sim.model.nv, env.sim.model.nu))
 
-if __name__ == '__main__':
+
+def test_eef_controller():
     control = MJEEFController(env.sim)
     i = 0
     while True:
@@ -21,7 +22,22 @@ if __name__ == '__main__':
         a[:7] = q_dot
         a[7:9] = gripper_q
 
-        env.step(a)
+        obs, reward, done, _ = env.step(a)
+        if done:
+            break
         # print('q_dot: {}'.format(q_dot))
         # print('q_vel: {}'.format(env.sim.data.qvel))
         env.render()
+
+
+def test_random_controller():
+
+    while True:
+        a = env.action_space.sample()
+        obs, rewrad, done, _ = env.step(a)
+        env.render()
+
+
+if __name__ == '__main__':
+    # test_eef_controller()
+    test_random_controller()

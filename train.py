@@ -1,7 +1,7 @@
 import os
 from spinup import ppo, ddpg, trpo, td3
 import tensorflow as tf
-from envs.sawyer_env import SawyerReachEnv
+from envs.sawyer_env import SawyerReachEnv, SawyerGraspEnv
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 SAVE_PATH = PATH + '/results/sawyer'
@@ -9,7 +9,10 @@ EXP_NAME = 'sawyer_reach'
 
 
 def train(alg, task):
-    env_fn = lambda: SawyerReachEnv(n_substeps=25, reward_type='dense')
+    if task == 'reach':
+        env_fn = lambda: SawyerReachEnv(n_substeps=25, reward_type='dense')
+    elif task == 'grasp':
+        env_fn = lambda: SawyerGraspEnv(n_substeps=25, reward_type='dense')
 
     ac_kwargs = dict(hidden_sizes=[64, 64], activation=tf.nn.relu)
 
@@ -44,5 +47,5 @@ def plot():
 
 if __name__ == '__main__':
     alg = 'ppo'
-    task = 'reach'
+    task = 'grasp'
     train(alg, task)
