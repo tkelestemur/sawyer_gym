@@ -31,7 +31,9 @@ env.reset()
 
 ## TODO: 
 
-- [ ] Add camera to the SawyerGraspEnv
+SawyerGraspEnv:
+- [ ] Add camera 
 - [ ] Fix grasp reward function
-- [ ] Fix friction and penetration issues in SawyerGraspEnv
+- [ ] Fix friction and penetration issues
 
+SawyerReachEnv:
