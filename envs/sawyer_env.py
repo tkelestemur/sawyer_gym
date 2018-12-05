@@ -149,7 +149,7 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         d = self.sim.data.get_site_xpos(GRIPPER_LINK) - self.sim.data.get_site_xpos(OBJECT)
         euc_d = np.linalg.norm(d)
         # dist_reward = np.exp(-0.25 * euc_d)
-        dist_reward = - euc_d
+        dist_reward = - 100 * euc_d
 
         # calculate grasp reward
         self.object_id = self.sim.model.geom_name2id(OBJECT)
@@ -179,7 +179,7 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
         # calculate terminal reward
         if grasped and (self.sim.data.get_site_xpos(OBJECT)[2] - self.object_init_pos[2]) > 0.1:
-            terminal_reward = 10
+            terminal_reward = 100
             done = True
 
         else:

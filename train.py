@@ -31,7 +31,7 @@ def train(alg, task):
     elif alg == 'trpo':
 
         logger_kwargs = dict(output_dir=SAVE_PATH + '/trpo', exp_name=EXP_NAME)
-        trpo(env_fn=env_fn, ac_kwargs=ac_kwargs, steps_per_epoch=5000, epochs=200,
+        trpo(env_fn=env_fn, ac_kwargs=ac_kwargs, steps_per_epoch=5000, epochs=2000,
              logger_kwargs=logger_kwargs, max_ep_len=200)
 
     elif alg == 'td3':
