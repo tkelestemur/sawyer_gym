@@ -15,14 +15,14 @@
 
         <!-- Table -->
         <body name="table" pos="0.7 0 -0.52">
-            <geom name="table" group="1" pos="0 0 0" size="0.4 0.5 0.4" type="box" mass="2000" material="table_mat" solimp="0.998 0.998 0.001" solref="0.01 1"/>
+            <geom name="table" pos="0 0 0" size="0.4 0.5 0.4" type="box" mass="2000" solimp="0.998 0.998 0.001" solref="0.01 1" group="1"/>
         </body>
 
         <!-- Object -->
         <body name="object">
-            <joint name="object_j" type="free" damping="0.01"/>
-			<geom group="1" size="0.02 0.02 0.02" type="box" name="object" material="block_mat" mass="0.02" solimp="0.998 0.998 0.001" solref="0.01 1"/>
-			<site name="object" pos="0 0 0" size="0.01" rgba=".1 .9 0 1" type="sphere"/>
+            <joint name="object_j" type="free"/>
+			<geom name="object" size="0.02 0.02 0.02" type="box" rgba="0.9 0.0 0.0 0.8" mass="0.02" solimp="0.998 0.998 0.001" solref="0.01 1" group="1"/>
+			<site name="object" size="0.01" pos="0 0 0" rgba=".1 .9 0 1" type="sphere"/>
 		</body>
 
 
@@ -51,9 +51,9 @@
         <!--<velocity ctrllimited="true" ctrlrange="-1.776 1.776" joint="right_j5" name="right_j5_vel"/>-->
         <!--<velocity ctrllimited="true" ctrlrange="-2.316 2.316" joint="right_j6" name="right_j6_vel"/>-->
 
+        <position ctrllimited="true" ctrlrange="0 0.020833"   joint="right_gripper_l_finger_joint" kp="10000"  forcelimited="true" forcerange="-20 20"/>
+        <position ctrllimited="true" ctrlrange="-0.020833 0"  joint="right_gripper_r_finger_joint" kp="10000"  forcelimited="true" forcerange="-20 20"/>
 
-        <position ctrllimited="true" ctrlrange="-0.020833 0"  joint="right_gripper_r_finger_joint" kp="10000" name="right_gripper_r_finger_joint" forcelimited="true" forcerange="-20 20"/>
-        <position ctrllimited="true" ctrlrange="0 0.020833" joint="right_gripper_l_finger_joint" kp="10000" name="right_gripper_l_finger_joint" forcelimited="true" forcerange="-20 20"/>
     </actuator>
 
 

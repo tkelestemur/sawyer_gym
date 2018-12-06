@@ -51,7 +51,7 @@ class MJEEFController(object):
         if cmd.grasp:
             q = np.array([-0.020833, 0.020833])
         else:
-            q = np.array([-0.012, 0.012])
+            q = np.array([-0.012, 0.011])
 
         return q
 

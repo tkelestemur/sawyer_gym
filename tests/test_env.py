@@ -6,7 +6,7 @@ from controllers.mj_eef_controller import MJEEFController, EEFCommand
 import matplotlib.pyplot as plt
 
 # env = SawyerReachEnv(n_substeps=1)
-env = SawyerGraspEnv(n_substeps=20)
+env = SawyerGraspEnv(n_substeps=1)
 env.reset()
 print('# Generalized Coordinate : {} # DoF {} # Actuators {}'.format(env.sim.model.nq, env.sim.model.nv, env.sim.model.nu))
 
@@ -31,10 +31,10 @@ def test_eef_controller():
 
 
 def test_random_controller():
-
+    a_zero = np.zeros(env.action_space.shape[0])
     while True:
-        a = env.action_space.sample()
-        obs, rewrad, done, _ = env.step(a)
+        # a = env.action_space.sample()
+        obs, rewrad, done, _ = env.step(a_zero)
         env.render()
 
 
@@ -64,5 +64,5 @@ def test_velocity_controller():
 
 if __name__ == '__main__':
     # test_eef_controller()
-    # test_random_controller()
-    test_velocity_controller()
+    test_random_controller()
+    # test_velocity_controller()

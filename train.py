@@ -46,6 +46,6 @@ def plot():
 
 
 if __name__ == '__main__':
-    alg = 'ppo'
+    alg = 'td3'
     task = 'grasp'
     train(alg, task)

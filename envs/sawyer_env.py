@@ -104,9 +104,10 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     def reset_model(self):
         qpos_arm = np.array([-0.58940138, -1.1788925, 0.61659816, 1.62266692,
                              -0.22474244, 1.2130372, -1.32163291])
-        qpos_fingers = np.array([-0.020833, 0.020833])
+        qpos_fingers = np.array([0.02083, -0.02083])
         qpos_object = np.array([0.7, 0, -0.095, 1, 0, 0, 0])
-        qpos_init = np.concatenate((qpos_arm, qpos_fingers, qpos_object))
+        qpos_init = np.concatenate([qpos_arm.flat, qpos_fingers.flat, qpos_object.flat])
+        # print(qpos_init)
         qvel_init = np.zeros(self.sim.model.nv)
 
         # initialize arm configuration and velocity
@@ -116,7 +117,8 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     def step(self, action):
 
         # gravity compensation
-        self.sim.data.qfrc_applied[:7] = self.sim.data.qfrc_bias[:7]
+        # self.sim.data.qfrc_applied[:7] = self.sim.data.qfrc_bias[:7]
+        self.sim.data.qfrc_applied[:9] = self.sim.data.qfrc_bias[:9]
 
         self.do_simulation(action, self.frame_skip)
 
@@ -149,7 +151,7 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         d = self.sim.data.get_site_xpos(GRIPPER_LINK) - self.sim.data.get_site_xpos(OBJECT)
         euc_d = np.linalg.norm(d)
         # dist_reward = np.exp(-0.25 * euc_d)
-        dist_reward = - 100 * euc_d
+        dist_reward = - euc_d
 
         # calculate grasp reward
         self.object_id = self.sim.model.geom_name2id(OBJECT)
@@ -172,10 +174,11 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
                 right_finger_contact = True
 
         if left_finger_contact and right_finger_contact:
-            grasp_reward = 1 + self.sim.data.get_site_xpos(OBJECT)[2] - self.object_init_pos[2]
+            grasp_reward = 1 + 10 * self.sim.data.get_site_xpos(OBJECT)[2] - self.object_init_pos[2]
+            # print('grasp_reward : {}'.format(grasp_reward))
             grasped = True
 
-        # print('dist_reward: ({}) grasp_reward: ({})'.format(dist_reward, grasp_reward))
+        # print('dist_reward: [{}] grasp_reward: [{}] terminal_reward: [{}]'.format(dist_reward, grasp_reward, terminal_reward))
 
         # calculate terminal reward
         if grasped and (self.sim.data.get_site_xpos(OBJECT)[2] - self.object_init_pos[2]) > 0.1:
