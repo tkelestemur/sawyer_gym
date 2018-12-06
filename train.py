@@ -19,8 +19,8 @@ def train(alg, task):
     if alg == 'ppo':
 
         logger_kwargs = dict(output_dir=SAVE_PATH + '/ppo', exp_name=EXP_NAME)
-        ppo(env_fn=env_fn, ac_kwargs=ac_kwargs, steps_per_epoch=5000, epochs=400,
-            logger_kwargs=logger_kwargs, max_ep_len=200)
+        ppo(env_fn=env_fn, ac_kwargs=ac_kwargs, steps_per_epoch=5000, epochs=2500,
+            logger_kwargs=logger_kwargs, max_ep_len=10000)
 
     elif alg == 'ddpg':
 
@@ -46,6 +46,6 @@ def plot():
 
 
 if __name__ == '__main__':
-    alg = 'td3'
+    alg = 'ppo'
     task = 'grasp'
     train(alg, task)
