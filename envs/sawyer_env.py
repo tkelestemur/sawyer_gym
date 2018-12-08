@@ -130,17 +130,16 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         return obs, reward, done, reward_dict
 
     def _get_obs(self):
-        eef_pos = self.sim.data.get_site_xpos(GRIPPER_LINK)
-        eef_vel = self.sim.data.get_site_xvelp(GRIPPER_LINK)
         arm_qpos = self.sim.data.qpos[:7]
         arm_qvel = self.sim.data.qvel[:7]
         finger_qpos = self.sim.data.qpos[7:9]
         finger_qvel = self.sim.data.qvel[7:9]
+        eef_pos = self.sim.data.get_site_xpos(GRIPPER_LINK)
+        eef_vel = self.sim.data.get_site_xvelp(GRIPPER_LINK)
         object_pos = self.sim.data.get_site_xpos(OBJECT)
         object_vel = self.sim.data.get_site_xvelp(OBJECT)
 
-        obs = np.concatenate([arm_qpos, arm_qvel, eef_pos, eef_vel, finger_qpos,
-                              finger_qvel, object_pos, object_vel])
+        obs = np.concatenate([arm_qpos, arm_qvel, finger_qpos, finger_qvel, eef_pos, eef_vel, object_pos, object_vel])
         return obs
 
     def _calculate_grasp_reward(self):

@@ -7,7 +7,7 @@
         <light directional="true" ambient="0.2 0.2 0.2" diffuse="0.8 0.8 0.8" specular="0.3 0.3 0.3" castshadow="false" pos="0 0 4" dir="0 0 -1" name="light0"/>
 
         <!-- Floor -->
-        <geom name="floor" pos="0 0 -.913" size="20 20 .125" type="plane" material="mat_plane" condim="3"/>
+        <geom name="floor" pos="0 0 -.913" size="20 20 .125" type="plane" material="mat_plane"/>
 
         <!-- Robot -->
         <include file="sawyer_gripper_mujoco.xml"/>
