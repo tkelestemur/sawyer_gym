@@ -6,7 +6,7 @@ from controllers.mj_eef_controller import MJEEFController, EEFCommand
 import matplotlib.pyplot as plt
 
 # env = SawyerReachEnv(n_substeps=1)
-env = SawyerGraspEnv(n_substeps=25)
+env = SawyerGraspEnv(n_substeps=5)
 env.reset()
 print('# Generalized Coordinate : {} # DoF {} # Actuators {}'.format(env.sim.model.nq, env.sim.model.nv, env.sim.model.nu))
 print('QPos Init: {} \nQVel Init: {}'.format(env.sim.data.qpos, env.sim.data.qvel))
@@ -22,9 +22,14 @@ def test_eef_controller():
         a[:7] = q_dot
         a[7:9] = gripper_q
 
-        obs, reward, done, _ = env.step(a)
-        # if done:
-        #     break
+        obs, reward, done, reward_dict = env.step(a)
+        print('Observation : \n{}'.format(obs))
+        # print('dist_reward: {} grasp_reward: {} terminal_reward: {} total_reward: {}'.format(reward_dict['dist_reward'],
+        #                                                                                      reward_dict['grasp_reward'],
+        #                                                                                      reward_dict['terminal_reward'],
+        #                                                                                      reward))
+        if done:
+            break
         # print('q_dot: {}'.format(q_dot))
         # print('q_vel: {}'.format(env.sim.data.qvel))
         env.render()
@@ -35,8 +40,6 @@ def test_random_controller():
     for i in range(100000):
         # a = env.action_space.sample()
 
-        print('Object Init Z: {} Object Curr Z" {}'.format(env.object_init_pos[2],
-                                                           env.sim.data.get_site_xpos('object')[2]))
         obs, rewrad, done, _ = env.step(a_zero)
         env.render()
 

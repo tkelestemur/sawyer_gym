@@ -121,9 +121,9 @@
                                                             </body>
                                                         </body>
                                                     </body>
-                                                    <body name="right_gripper_tip" pos="0 0 0.14062">
+                                                    <body name="right_gripper_tip" pos="0 0 0.125">
                                                         <inertial pos="0 0 0" mass="2e-06" diaginertia="1.1e-09 1.1e-09 1.1e-09" />
-                                                        <site name="right_gripper_tip" pos="0 0 -0.01" size="0.005" rgba=".1 .9 0 .8" type="sphere"/>
+                                                        <site name="right_gripper_tip" pos="0 0 0" size="0.005" rgba=".1 .9 0 .8" type="sphere"/>
                                                     </body>
                                                 </body>
                                             </body>
