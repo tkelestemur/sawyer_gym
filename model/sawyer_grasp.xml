@@ -21,7 +21,7 @@
         <!-- Object -->
         <body name="object">
             <joint name="object_j" type="free"/>
-			<geom name="object" size="0.02 0.02 0.02" type="box" rgba="0.9 0.0 0.0 0.8" mass="0.02" solimp="0.998 0.998 0.001" solref="0.01 1" group="1"/>
+			<geom name="object" size="0.02 0.02 0.02" type="box" rgba="0.9 0.0 0.0 0.8" mass="0.002" solimp="0.998 0.998 0.001" solref="0.01 1" group="1"/>
 			<site name="object" size="0.01" pos="0 0 0" rgba=".1 .9 0 1" type="sphere"/>
 		</body>
 
@@ -42,6 +42,14 @@
         <velocity ctrllimited="true" ctrlrange="-3.485 3.485" joint="right_j5" kv="0.5" name="right_j5_vel"/>
         <velocity ctrllimited="true" ctrlrange="-4.545 4.545" joint="right_j6" kv="0.1" name="right_j6_vel"/>
 
+        <!--<velocity ctrllimited="true" ctrlrange="-1.74 1.74"   joint="right_j0" kv="80.0" name="right_j0_vel"/>-->
+        <!--<velocity ctrllimited="true" ctrlrange="-1.328 1.328" joint="right_j1" kv="70.0" name="right_j1_vel"/>-->
+        <!--<velocity ctrllimited="true" ctrlrange="-1.957 1.957" joint="right_j2" kv="60.0" name="right_j2_vel"/>-->
+        <!--<velocity ctrllimited="true" ctrlrange="-1.957 1.957" joint="right_j3" kv="40.0" name="right_j3_vel"/>-->
+        <!--<velocity ctrllimited="true" ctrlrange="-3.485 3.485" joint="right_j4" kv="20.0" name="right_j4_vel"/>-->
+        <!--<velocity ctrllimited="true" ctrlrange="-3.485 3.485" joint="right_j5" kv="5" name="right_j5_vel"/>-->
+        <!--<velocity ctrllimited="true" ctrlrange="-4.545 4.545" joint="right_j6" kv="1" name="right_j6_vel"/>-->
+
 
         <!--<velocity ctrllimited="true" ctrlrange="-0.88 0.88"   joint="right_j0" kv="200.0" name="right_j0_vel"/>-->
         <!--<velocity ctrllimited="true" ctrlrange="-0.678 0.678" joint="right_j1" name="right_j1_vel"/>-->
@@ -51,8 +59,8 @@
         <!--<velocity ctrllimited="true" ctrlrange="-1.776 1.776" joint="right_j5" name="right_j5_vel"/>-->
         <!--<velocity ctrllimited="true" ctrlrange="-2.316 2.316" joint="right_j6" name="right_j6_vel"/>-->
 
-        <position ctrllimited="true" ctrlrange="0 0.020833"   joint="right_gripper_l_finger_joint" kp="10000"  forcelimited="true" forcerange="-20 20"/>
-        <position ctrllimited="true" ctrlrange="-0.020833 0"  joint="right_gripper_r_finger_joint" kp="10000"  forcelimited="true" forcerange="-20 20"/>
+        <position ctrllimited="true" ctrlrange="0 0.020833"   joint="right_gripper_l_finger_joint" kp="10000" forcelimited="true" forcerange="-20 20"/>
+        <position ctrllimited="true" ctrlrange="-0.020833 0"  joint="right_gripper_r_finger_joint" kp="10000" forcelimited="true" forcerange="-20 20"/>
 
     </actuator>
 

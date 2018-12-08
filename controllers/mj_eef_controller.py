@@ -40,8 +40,8 @@ class MJEEFController(object):
                 print('Ctrl Mod: {}'.format('Translational' if not self.ctrl_mod else 'Rotational'))
 
         elif sp_event is not None and sp_event.ev_type == spnav.SPNAV_EVENT_MOTION:
-            trans_cmd = np.asarray(sp_event.translation, dtype=np.float16) / 500
-            rot_cmd = np.asarray(sp_event.rotation, dtype=np.float16) / 250
+            trans_cmd = np.asarray(sp_event.translation, dtype=np.float16) / 1000
+            rot_cmd = np.asarray(sp_event.rotation, dtype=np.float16) / 500
             # print('pos: {}'.format(pos_cmd[0]))
 
         eef_vel = np.concatenate((trans_cmd, rot_cmd))
@@ -49,9 +49,9 @@ class MJEEFController(object):
 
     def calculate_gripper_q(self, cmd):
         if cmd.grasp:
-            q = np.array([-0.020833, 0.020833])
+            q = np.array([0.0, 0.0])
         else:
-            q = np.array([-0.012, 0.011])
+            q = np.array([0.02, -0.02])
 
         return q
 

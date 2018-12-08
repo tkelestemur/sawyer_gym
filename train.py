@@ -1,5 +1,6 @@
 import os
 from spinup import ppo, ddpg, trpo, td3
+from spinup.utils.mpi_tools import mpi_fork
 import tensorflow as tf
 from envs.sawyer_env import SawyerReachEnv, SawyerGraspEnv
 
@@ -19,8 +20,8 @@ def train(alg, task):
     if alg == 'ppo':
 
         logger_kwargs = dict(output_dir=SAVE_PATH + '/ppo', exp_name=EXP_NAME)
-        ppo(env_fn=env_fn, ac_kwargs=ac_kwargs, steps_per_epoch=5000, epochs=2500,
-            logger_kwargs=logger_kwargs, max_ep_len=10000)
+        ppo(env_fn=env_fn, ac_kwargs=ac_kwargs, steps_per_epoch=5000, epochs=3000,
+            logger_kwargs=logger_kwargs, max_ep_len=500)
 
     elif alg == 'ddpg':
 
