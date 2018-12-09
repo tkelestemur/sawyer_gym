@@ -35,7 +35,7 @@ class SawyerReachEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         # move target point to random target pos
         self.sim.data.mocap_pos[0] = self.target_pos
         # qpos_init[9:12] = self.target_pos
-
+        self.sim.nsubsteps = 25
         # initialize arm configuration and velocity
         self.set_state(qpos_init, qvel_init)
         return self._get_obs()
@@ -179,7 +179,7 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         if left_finger_contact and right_finger_contact:
 
             object_pos_z = self.sim.data.get_site_xpos(OBJECT)[2] - self.object_init_pos[2]
-            grasp_reward = 1 + object_pos_z
+            grasp_reward = 1 + 10 * object_pos_z
 
             # calculate terminal reward
             if object_pos_z > 0.1:

@@ -21,7 +21,7 @@ def train(alg, task):
 
         logger_kwargs = dict(output_dir=SAVE_PATH + '/ppo', exp_name=EXP_NAME)
         ppo(env_fn=env_fn, ac_kwargs=ac_kwargs, steps_per_epoch=5000, epochs=4000,
-            logger_kwargs=logger_kwargs, max_ep_len=400)
+            logger_kwargs=logger_kwargs, max_ep_len=1000)
 
     elif alg == 'ddpg':
 

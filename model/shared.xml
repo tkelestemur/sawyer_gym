@@ -3,7 +3,7 @@
     <compiler angle="radian" meshdir="meshes/"/>
     <size njmax="500" nconmax="100"/>
 
-    <option gravity="0 0 -9.81" timestep="0.002" cone="elliptic" impratio="100" />
+    <option gravity="0 0 -9.81" timestep="0.002" cone="elliptic" impratio="20" />
 
     <asset>
         <mesh name="pedestal" file="pedestal.STL" />
