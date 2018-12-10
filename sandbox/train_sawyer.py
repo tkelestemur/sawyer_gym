@@ -17,8 +17,6 @@ get_session(config=config)
 
 
 results_dir = "/home/tarik/sawyer_mujoco/results"
-# env = SawyerEnv(reward_type='sparse')
-env = gym.make("Reacher-v2")
 
 logger_path = os.path.join(results_dir, str(0))
 env = Monitor(env, logger_path, allow_early_resets=True)
@@ -30,6 +28,7 @@ env = VecNormalize(env)
 save_dir = "/home/tarik/sawyer_mujoco/data/"
 model_name = "sawyer_reach_ppo2_1m"
 network = 'mlp'
+
 
 def train(save=False):
 

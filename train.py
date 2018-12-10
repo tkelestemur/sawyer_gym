@@ -53,9 +53,9 @@ def train(alg, task):
 
     elif alg == 'td3':
 
-        logger_kwargs = dict(output_dir=SAVE_PATH + '/td3', exp_name=EXP_NAME)
-        td3(env_fn=env_fn, ac_kwargs=ac_kwargs, steps_per_epoch=5000, epochs=400,
-            logger_kwargs=logger_kwargs, max_ep_len=200)
+        logger_kwargs = dict(output_dir=SAVE_PATH + '/td3_suite', exp_name=EXP_NAME)
+        td3(env_fn=env_fn, ac_kwargs=ac_kwargs, steps_per_epoch=5000, epochs=2000,
+            logger_kwargs=logger_kwargs, max_ep_len=1000)
 
 
 def plot():
@@ -63,6 +63,6 @@ def plot():
 
 
 if __name__ == '__main__':
-    alg = 'ppo'
+    alg = 'td3'
     task = 'grasp_robosuite'
     train(alg, task)
