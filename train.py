@@ -41,13 +41,13 @@ def train(alg, task):
 
     elif alg == 'ddpg':
 
-        logger_kwargs = dict(output_dir=SAVE_PATH + '/ddpg', exp_name=EXP_NAME)
+        logger_kwargs = dict(output_dir=SAVE_PATH + '/ddpg_suite', exp_name=EXP_NAME)
         ddpg(env_fn=env_fn, ac_kwargs=ac_kwargs, steps_per_epoch=5000, epochs=1000,
              logger_kwargs=logger_kwargs, max_ep_len=200)
 
     elif alg == 'trpo':
 
-        logger_kwargs = dict(output_dir=SAVE_PATH + '/trpo', exp_name=EXP_NAME)
+        logger_kwargs = dict(output_dir=SAVE_PATH + '/trpo_suite', exp_name=EXP_NAME)
         trpo(env_fn=env_fn, ac_kwargs=ac_kwargs, steps_per_epoch=5000, epochs=2000,
              logger_kwargs=logger_kwargs, max_ep_len=200)
 
@@ -63,6 +63,6 @@ def plot():
 
 
 if __name__ == '__main__':
-    alg = 'td3'
+    alg = 'ddpg'
     task = 'grasp_robosuite'
     train(alg, task)
