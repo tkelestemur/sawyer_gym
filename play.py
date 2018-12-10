@@ -31,7 +31,7 @@ def play():
 
     while i < n_episode:
         action = get_action(obs)
-        # print('Action: {}'.format(action))
+        print('Action: {}'.format(action))
         obs, r, d, reward_info = env.step(action)
         ep_len += 1
         ep_ret += r

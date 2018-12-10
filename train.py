@@ -9,7 +9,7 @@ from robosuite.wrappers import GymWrapper
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 SAVE_PATH = PATH + '/results/sawyer'
-EXP_NAME = 'sawyer_reach'
+EXP_NAME = 'sawyer_grasp'
 
 
 def train(alg, task):
@@ -42,7 +42,7 @@ def train(alg, task):
     elif alg == 'ddpg':
 
         logger_kwargs = dict(output_dir=SAVE_PATH + '/ddpg_suite', exp_name=EXP_NAME)
-        ddpg(env_fn=env_fn, ac_kwargs=ac_kwargs, steps_per_epoch=5000, epochs=1000,
+        ddpg(env_fn=env_fn, steps_per_epoch=5000, batch_size=256, epochs=1000,
              logger_kwargs=logger_kwargs, max_ep_len=200)
 
     elif alg == 'trpo':
@@ -54,7 +54,7 @@ def train(alg, task):
     elif alg == 'td3':
 
         logger_kwargs = dict(output_dir=SAVE_PATH + '/td3_suite', exp_name=EXP_NAME)
-        td3(env_fn=env_fn, ac_kwargs=ac_kwargs, steps_per_epoch=5000, epochs=2000,
+        td3(env_fn=env_fn, batch_size=256, steps_per_epoch=5000, epochs=2000,
             logger_kwargs=logger_kwargs, max_ep_len=1000)
 
 
@@ -63,6 +63,6 @@ def plot():
 
 
 if __name__ == '__main__':
-    alg = 'ddpg'
+    alg = 'td3'
     task = 'grasp_robosuite'
     train(alg, task)
