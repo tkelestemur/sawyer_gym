@@ -55,7 +55,7 @@ def train(alg, task):
 
         logger_kwargs = dict(output_dir=SAVE_PATH + '/td3_suite', exp_name=EXP_NAME)
         td3(env_fn=env_fn, batch_size=256, steps_per_epoch=5000, epochs=2000,
-            logger_kwargs=logger_kwargs, max_ep_len=1000)
+            logger_kwargs=logger_kwargs, max_ep_len=200)
 
 
 def plot():
