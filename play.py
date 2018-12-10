@@ -7,7 +7,7 @@ from robosuite.wrappers import GymWrapper
 GRIPPER_LINK = 'right_gripper_tip'
 
 PATH = os.path.dirname(os.path.realpath(__file__))
-SAVE_PATH = PATH + '/results/sawyer/ppo_suite'
+SAVE_PATH = PATH + '/results/sawyer/ddpg_suite'
 
 env = GymWrapper(
     suite.make(
