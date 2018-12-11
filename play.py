@@ -7,7 +7,7 @@ from robosuite.wrappers import GymWrapper
 GRIPPER_LINK = 'right_gripper_tip'
 
 PATH = os.path.dirname(os.path.realpath(__file__))
-SAVE_PATH = PATH + '/results/sawyer/ddpg_suite'
+SAVE_PATH = PATH + '/results/sawyer/ppo_suite_400'
 
 env = GymWrapper(
     suite.make(
@@ -26,7 +26,7 @@ def play():
     # env = SawyerGraspEnv(n_substeps=25)
     n_episode = 10
     ep_len, ep_ret, i = 0, 0, 0
-    max_ep_len = 1000
+    max_ep_len = 400
     obs = env.reset()
 
     while i < n_episode:
