@@ -35,9 +35,9 @@ def train(alg, task):
 
     if alg == 'ppo':
         mpi_fork(2)
-        logger_kwargs = dict(output_dir=SAVE_PATH + '/ppo_suite_400', exp_name=EXP_NAME)
-        ppo(env_fn=env_fn, steps_per_epoch=4000, epochs=2000,
-             logger_kwargs=logger_kwargs, max_ep_len=400)
+        logger_kwargs = dict(output_dir=SAVE_PATH + '/ppo_suite_5k_epoch', exp_name=EXP_NAME)
+        ppo(env_fn=env_fn, steps_per_epoch=4000, epochs=5000,
+             logger_kwargs=logger_kwargs, max_ep_len=200)
 
     elif alg == 'ddpg':
 
@@ -63,6 +63,6 @@ def plot():
 
 
 if __name__ == '__main__':
-    alg = 'ddpg'
+    alg = 'ppo'
     task = 'grasp_robosuite'
     train(alg, task)
