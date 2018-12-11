@@ -2,13 +2,13 @@
     "ac_kwargs":	{},
     "act_noise":	0.1,
     "actor_critic":	"mlp_actor_critic",
-    "batch_size":	256,
-    "env_fn":	"<function train.<locals>.<lambda> at 0x7fc9a8d5e7b8>",
+    "batch_size":	100,
+    "env_fn":	"<function train.<locals>.<lambda> at 0x7f8f90511730>",
     "epochs":	2000,
     "exp_name":	"sawyer_grasp",
     "gamma":	0.99,
     "logger":	{
-        "<spinup.utils.logx.EpochLogger object at 0x7fc9a8d78860>":	{
+        "<spinup.utils.logx.EpochLogger object at 0x7f8f9052ba90>":	{
             "epoch_dict":	{},
             "exp_name":	"sawyer_grasp",
             "first_row":	true,
@@ -35,7 +35,7 @@
     "replay_size":	1000000,
     "save_freq":	1,
     "seed":	0,
-    "start_steps":	10000,
+    "start_steps":	100000,
     "steps_per_epoch":	5000,
     "target_noise":	0.2
 }
