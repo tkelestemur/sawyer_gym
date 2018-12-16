@@ -115,6 +115,11 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
     def step(self, action):
 
+        # low = self.action_space.low
+        # high = self.action_space.high
+        bounds = self.model.actuator_ctrlrange.copy()
+        action = np.clip(action, bounds[:, 0], bounds[:, 1])
+
         # gravity compensation
         self.sim.data.qfrc_applied[:7] = self.sim.data.qfrc_bias[:7]
         # self.sim.data.qfrc_applied[:9] = self.sim.data.qfrc_bias[:9]
