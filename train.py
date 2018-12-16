@@ -1,5 +1,5 @@
 import os
-from spinup import ppo, ddpg, trpo, td3
+from spinup import ppo, ddpg, trpo, td3, sac
 from spinup.utils.mpi_tools import mpi_fork
 import tensorflow as tf
 from envs.sawyer_env import SawyerReachEnv, SawyerGraspEnv
@@ -56,12 +56,18 @@ def train(alg, task):
         td3(env_fn=env_fn, start_steps=100000, steps_per_epoch=5000, epochs=2000,
             logger_kwargs=logger_kwargs, max_ep_len=200)
 
+    elif alg == 'sac':
+
+        logger_kwargs = dict(output_dir=save_path, exp_name=EXP_NAME)
+        sac(env_fn=env_fn, start_steps=100000, steps_per_epoch=5000, epochs=2000,
+            logger_kwargs=logger_kwargs, max_ep_len=200)
+
 
 def plot():
     pass
 
 
 if __name__ == '__main__':
-    alg = 'ppo'
+    alg = 'sac'
     task = 'grasp'
     train(alg, task)
