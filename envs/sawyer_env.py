@@ -191,8 +191,6 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
                 terminal_reward = 100
                 done = True
 
-            # print('grasp_reward: [{}] terminal_reward: [{}]'.format(grasp_reward, terminal_reward))
-
         reward_dict = {'dist_reward': dist_reward, 'grasp_reward': grasp_reward,
                        'terminal_reward': terminal_reward}
         # print(reward)

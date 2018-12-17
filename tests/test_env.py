@@ -6,7 +6,7 @@ from controllers.mj_eef_controller import MJEEFController, EEFCommand
 import matplotlib.pyplot as plt
 
 # env = SawyerReachEnv(n_substeps=1)
-env = SawyerGraspEnv(n_substeps=25)
+env = SawyerGraspEnv(n_substeps=5)
 env.reset()
 print('# Generalized Coordinate : {} # DoF {} # Actuators {}'.format(env.sim.model.nq, env.sim.model.nv, env.sim.model.nu))
 print('QPos Init: {} \nQVel Init: {}'.format(env.sim.data.qpos, env.sim.data.qvel))
