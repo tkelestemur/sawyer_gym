@@ -21,7 +21,7 @@ def train(alg, task):
         mpi_fork(2)
 
         logger_kwargs = dict(output_dir=save_path, exp_name=EXP_NAME)
-        ppo(env_fn=env_fn, steps_per_epoch=4000, epochs=5000,
+        ppo(env_fn=env_fn, steps_per_epoch=4000, epochs=20000,
              logger_kwargs=logger_kwargs, max_ep_len=1000)
 
     elif alg == 'ddpg':
@@ -38,9 +38,9 @@ def train(alg, task):
 
     elif alg == 'td3':
 
-        logger_kwargs = dict(output_dir=SAVE_PATH + '/td3_suite', exp_name=EXP_NAME)
+        logger_kwargs = dict(output_dir=save_path, exp_name=EXP_NAME)
         td3(env_fn=env_fn, start_steps=100000, steps_per_epoch=5000, epochs=2000,
-            logger_kwargs=logger_kwargs, max_ep_len=200)
+            logger_kwargs=logger_kwargs, max_ep_len=1000)
 
     elif alg == 'sac':
 
@@ -54,6 +54,6 @@ def plot():
 
 
 if __name__ == '__main__':
-    alg = 'ppo'
+    alg = 'td3'
     task = 'grasp'
     train(alg, task)

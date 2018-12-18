@@ -15,7 +15,7 @@ def play():
     env = SawyerGraspEnv(n_substeps=5)
     n_episode = 10
     ep_len, ep_ret, i = 0, 0, 0
-    max_ep_len = 200
+    max_ep_len = 1000
     obs = env.reset()
 
     while i < n_episode:
