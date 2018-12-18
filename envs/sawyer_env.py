@@ -146,7 +146,7 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         object_rot = self.sim.data.get_body_xquat(OBJECT)
         object_vel = self.sim.data.get_body_xvelp(OBJECT)
 
-        obs = np.concatenate([arm_qpos.flat, arm_qvel.flat, finger_qpos.flat, finger_qvel.flat, eef_pos.flat,
+        obs = np.concatenate([arm_qpos.flat, finger_qpos.flat, arm_qvel.flat, finger_qvel.flat, eef_pos.flat,
                               eef_vel.flat, eef_rot.flat, object_pos.flat, object_rot.flat, object_vel.flat])
         return obs
 

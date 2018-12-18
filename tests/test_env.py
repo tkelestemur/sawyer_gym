@@ -69,6 +69,7 @@ def test_velocity_controller():
     plt.plot(t, qdot_act, t, qdot_cmd)
     plt.show()
 
+
 if __name__ == '__main__':
     test_eef_controller()
     # test_random_controller()
