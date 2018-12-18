@@ -18,7 +18,7 @@ def train(alg, task):
     ac_kwargs = dict(hidden_sizes=[64, 64], activation=tf.nn.relu)
     save_path = os.path.join(SAVE_PATH, task, alg)
     if alg == 'ppo':
-        mpi_fork(2)
+        # mpi_fork(2)
 
         logger_kwargs = dict(output_dir=save_path, exp_name=EXP_NAME)
         ppo(env_fn=env_fn, steps_per_epoch=4000, epochs=20000,
@@ -54,6 +54,6 @@ def plot():
 
 
 if __name__ == '__main__':
-    alg = 'td3'
+    alg = 'ppo'
     task = 'grasp'
     train(alg, task)
