@@ -2,13 +2,13 @@
     "ac_kwargs":	{},
     "actor_critic":	"mlp_actor_critic",
     "clip_ratio":	0.2,
-    "env_fn":	"<function train.<locals>.<lambda> at 0x7fef6794a598>",
-    "epochs":	5000,
+    "env_fn":	"<function train.<locals>.<lambda> at 0x7f14be730d08>",
+    "epochs":	20000,
     "exp_name":	"sawyer",
     "gamma":	0.99,
     "lam":	0.97,
     "logger":	{
-        "<spinup.utils.logx.EpochLogger object at 0x7ff004c2bc88>":	{
+        "<spinup.utils.logx.EpochLogger object at 0x7f156b1a98d0>":	{
             "epoch_dict":	{},
             "exp_name":	"sawyer",
             "first_row":	true,
