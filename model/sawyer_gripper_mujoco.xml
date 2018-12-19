@@ -91,6 +91,9 @@
                                                         <body name="right_connector_plate_mount" pos="0 0 0.0176">
                                                             <inertial pos="0 0 0.0176" mass="0" diaginertia="0 0 0" />
                                                             <body name="right_electric_gripper_base" pos="0 0 0">
+
+                                                                <camera name="camera_on_hand" mode="fixed" pos="0.05 0 0" zaxis="0 0 -1"/>
+
                                                                 <inertial pos="0 0 0" quat="0 0 0.707107 0.707107" mass="2e-06" diaginertia="1.1e-09 1.1e-09 1.1e-09" />
                                                                 <geom type="mesh" contype="0" conaffinity="0" group="1" mesh="electric_gripper_base" />
                                                                 <geom size="0.029 0.05" pos="0.004 0 0.025" quat="0 0 0.707107 0.707107" type="cylinder" />

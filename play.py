@@ -12,7 +12,7 @@ SAVE_PATH = os.path.join(PATH, 'results', 'grasp', 'ppo')
 
 def play():
     _, get_action = load_policy(SAVE_PATH)
-    env = SawyerGraspEnv(n_substeps=1)
+    env = SawyerGraspEnv(n_substeps=5)
     n_episode = 10
     ep_len, ep_ret, i = 0, 0, 0
     max_ep_len = 1000

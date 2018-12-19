@@ -1,23 +1,13 @@
 import tensorflow as tf
 from baselines.ppo2 import ppo2
-import robosuite as suite
-from robosuite.wrappers import GymWrapper
 from baselines import logger
 from baselines.common.tf_util import get_session
 from baselines.common.vec_env.dummy_vec_env import DummyVecEnv
 from baselines.common.vec_env.vec_normalize import VecNormalize
 
-env = GymWrapper(
-    suite.make(
-        "SawyerLift",
-        use_camera_obs=False,  # do not use pixel observations
-        has_offscreen_renderer=False,  # not needed since not using pixel obs
-        has_renderer=False,  # make sure we can render to the screen
-        reward_shaping=True,  # use dense rewards
-        control_freq=10,
-        horizon=200
-    )
-)
+from envs.sawyer_env import SawyerGraspEnv
+
+env = SawyerGraspEnv(n_substeps=5)
 
 env = DummyVecEnv([lambda: env])
 env = VecNormalize(env)
