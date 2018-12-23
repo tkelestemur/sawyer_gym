@@ -10,7 +10,7 @@ from baselines.bench import Monitor
 from envs.sawyer_env import SawyerGraspEnv
 
 PATH = os.path.dirname(os.path.realpath(__file__))
-SAVE_PATH = os.path.join(PATH, 'results', 'baselines', 'ppo')
+SAVE_PATH = os.path.join(PATH, 'results', 'baselines', 'ppo_50m')
 
 env = SawyerGraspEnv(n_substeps=5)
 
@@ -30,7 +30,7 @@ def train(save=False):
 
     network = 'mlp'
     logger.configure()
-    model = ppo2.learn(network=network, env=env, total_timesteps=2000000, nsteps=1000)
+    model = ppo2.learn(network=network, env=env, total_timesteps=50000000, nsteps=1000)
 
     if save:
         model.save(SAVE_PATH)
