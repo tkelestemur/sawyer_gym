@@ -104,7 +104,9 @@ class SawyerGraspEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     def reset_model(self):
         qpos_arm = np.array([-0.58940138, -1.1788925, 0.61659816, 1.62266692, -0.22474244, 1.2130372, -1.32163291])
         qpos_fingers = np.array([0.02083, -0.02083])
-        qpos_object = np.array([0.7, 0, -0.1, 1, 0, 0, 0])
+        object_random_x = np.random.uniform(low=0.5, high=0.8)
+        object_random_y = np.random.uniform(low=-0.2, high=0.2)
+        qpos_object = np.array([object_random_x, object_random_y, -0.1, 1, 0, 0, 0])
         qpos_init = np.concatenate([qpos_arm.flat, qpos_fingers.flat, qpos_object.flat])
         qvel_init = np.zeros(self.sim.model.nv)
 

@@ -2,9 +2,6 @@ import os
 import numpy as np
 from spinup.utils.test_policy import load_policy
 from envs.sawyer_env import SawyerReachEnv, SawyerGraspEnv
-# import robosuite as suite
-# from robosuite.wrappers import GymWrapper
-GRIPPER_LINK = 'right_gripper_tip'
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 SAVE_PATH = os.path.join(PATH, 'results', 'grasp', 'ppo')

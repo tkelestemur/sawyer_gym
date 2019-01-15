@@ -30,7 +30,8 @@ def test_eef_controller():
                                         reward_dict['terminal_reward'],
                                         reward))
         if done:
-            break
+            env.reset()
+        #     break
         # print('q_dot: {}'.format(q_dot))
         # print('q_vel: {}'.format(env.sim.data.qvel))
         env.render()
