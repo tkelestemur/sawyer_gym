@@ -2,7 +2,7 @@ import sys, os
 import numpy as np
 sys.path.append(os.path.abspath('..'))
 from envs.sawyer_env import SawyerReachEnv, SawyerGraspEnv
-from controllers.mj_eef_controller import MJEEFController, EEFCommand
+from controllers.mj_eef_controller import MJEEFController
 import matplotlib.pyplot as plt
 
 # env = SawyerReachEnv(n_substeps=1)
