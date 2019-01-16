@@ -3,7 +3,7 @@ from spinup import ppo
 import robosuite as rs
 from robosuite.wrappers import GymWrapper
 PATH = os.path.dirname(os.path.realpath(__file__))
-SAVE_PATH = os.path.join(PATH, 'results')
+SAVE_PATH = os.path.join(PATH, 'results', 'robosuite')
 EXP_NAME = 'sawyer'
 
 # Notice how the environment is wrapped by the wrapper
@@ -12,19 +12,19 @@ env = GymWrapper(
         "SawyerLift",
         use_camera_obs=False,  # do not use pixel observations
         has_offscreen_renderer=False,  # not needed since not using pixel obs
-        has_renderer=True,  # make sure we can render to the screen
+        has_renderer=False,  # make sure we can render to the screen
         reward_shaping=True,  # use dense rewards
         control_freq=10,  # control should happen fast enough so that simulation looks smooth
     )
 )
 
+env_fn = lambda: env
 
 if __name__ == "__main__":
-    save_path = os.path.join(SAVE_PATH, 'robosuite', 'ppo')
-
+    save_path = os.path.join(SAVE_PATH, 'ppo')
+   
     logger_kwargs = dict(output_dir=save_path, exp_name=EXP_NAME)
-    ppo(env_fn=env, steps_per_epoch=4000, epochs=5000,
-        logger_kwargs=logger_kwargs, max_ep_len=200)
+    ppo(env_fn=env_fn, logger_kwargs=logger_kwargs, steps_per_epoch=4000, epochs=2000, max_ep_len=200)
 
 
     # while True:
