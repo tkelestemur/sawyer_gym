@@ -4,7 +4,7 @@ from spinup.utils.test_policy import load_policy
 from envs.sawyer_env import SawyerReachEnv, SawyerGraspEnv
 
 PATH = os.path.dirname(os.path.realpath(__file__))
-SAVE_PATH = os.path.join(PATH, 'results', 'grasp', 'ppo')
+SAVE_PATH = os.path.join(PATH, 'results', 'robo', 'ppo')
 
 
 def play():
